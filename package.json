@@ -4,7 +4,7 @@
   "description": "Micro front-end with React host and Angular 21 remote",
   "scripts": {
     "install:all": "cd react-host && npm install && cd ../angular-remote && npm install",
-    "start:angular": "cd angular-remote && npm start",
+    "start:angular": "cd commercial-auto-ui && npm start",
     "start:react": "cd react-host && npm start",
     "start": "echo 'Please run npm run start:angular in one terminal and npm run start:react in another terminal'"
   },
