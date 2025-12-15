@@ -1,0 +1,216 @@
+# Micro Front-End Project - Git Ignore File
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Production builds
+**/dist/
+**/build/
+**/.angular/
+**/.next/
+**/.nuxt/
+**/.cache/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+*.lcov
+.nyc_output/
+test-results/
+playwright-report/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# React specific
+react-host/build/
+react-host/.eslintcache
+
+# Angular specific
+commercial-auto-ui/dist/
+commercial-auto-ui/.angular/
+commercial-auto-ui/.firebase/
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Package manager lock files (optional - comment out if you want to commit them)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Federation artifacts
+**/remoteEntry.js
+**/remoteEntry.json
+**/federation-stats.json
+
+# Build artifacts
+**/*.js.map
+**/*.css.map
+
+# Local development
+.local/
+local/
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Compiled output
+**/*.js
+!**/craco.config.js
+!**/federation.config.js
+!**/*.config.js
+!**/jest.config.js
+
+# Allow JavaScript config files
+!**/*.config.js
+!**/*.config.mjs
+
+# Documentation builds
+**/docs/build/
+**/.docusaurus/
+
+# Storybook
+storybook-static/
+.storybook/
+
+# Miscellaneous
+.sass-cache/
+connect.lock
+typings/
+.angular/cache
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.parcel-cache
+
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# Webpack
+.webpack/
+
+# SvelteKit
+.svelte-kit
+
+# Turbo
+.turbo
+
+# Vercel
+.vercel
+
+# Nx
+.nx/cache
+
+# Wireit
+.wireit
+
+# Rush
+common/temp/
