@@ -1,0 +1,66 @@
+.commercial-auto-remote {
+  width: 100%;
+  min-height: 400px;
+}
+
+.remote-header {
+  margin-bottom: 20px;
+}
+
+.remote-header h2 {
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+
+.error-message {
+  color: #dc2626;
+  padding: 16px;
+  background: #fee2e2;
+  border-left: 4px solid #dc2626;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-size: 1rem;
+}
+
+.error-message strong {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.loading-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 20px;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.loading-message.initializing {
+  color: #2563eb;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#commercial-auto-container {
+  width: 100%;
+  min-height: 300px;
+}
