@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Commercial Auto - Micro Front-End Application"
+    />
+    <title>Commercial Auto</title>
+    <style>
+      /* Base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+          'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+          sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        background-color: #f5f5f5;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Header styles */
+      .app-header {
+        background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        color: white;
+        padding: 24px 40px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-content h1 {
+        margin: 0 0 8px 0;
+        font-size: 2rem;
+        font-weight: 700;
+      }
+
+      .header-content .subtitle {
+        margin: 0;
+        font-size: 1rem;
+        opacity: 0.9;
+        font-weight: 400;
+      }
+
+      /* Main content */
+      .app-main {
+        flex: 1;
+        padding: 32px;
+        max-width: 1400px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .remote-container {
+        background: white;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        min-height: 400px;
+      }
+
+      /* Loading spinner */
+      .loading-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        color: #666;
+        font-size: 1.1rem;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .spinner {
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #3b82f6;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      /* Error message */
+      .error-message {
+        background-color: #fee2e2;
+        border: 1px solid #ef4444;
+        color: #991b1b;
+        padding: 16px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+
+      .error-message strong {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      /* Footer */
+      .app-footer {
+        background-color: #1f2937;
+        color: #9ca3af;
+        text-align: center;
+        padding: 20px;
+        margin-top: auto;
+      }
+
+      .app-footer p {
+        margin: 0;
+        font-size: 0.9rem;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .app-header {
+          padding: 20px 24px;
+        }
+
+        .header-content h1 {
+          font-size: 1.5rem;
+        }
+
+        .header-content .subtitle {
+          font-size: 0.9rem;
+        }
+
+        .app-main {
+          padding: 20px 16px;
+        }
+
+        .remote-container {
+          padding: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+
+    <header class="app-header">
+      <div class="header-content">
+        <h1>Commercial Auto</h1>
+        <p class="subtitle">Micro Front-End Application</p>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <div class="remote-container">
+        <div id="loading" class="loading-message">
+          <div class="spinner"></div>
+          <span>Loading Commercial Auto application...</span>
+        </div>
+        <div id="error" class="error-message" style="display: none;"></div>
+        <div id="commercial-auto-container"></div>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <p>&copy; 2025 Commercial Auto Application</p>
+    </footer>
+
+    <script type="module">
+      // Configuration
+      const REMOTE_URL = 'http://localhost:4201';
+      const COMPONENT_KEY = './commercial-auto-app';
+
+      // Utility to load import maps
+      class ImportMapLoader {
+        constructor(remoteUrl) {
+          this.remoteUrl = remoteUrl.replace(/\/$/, '');
+          this.isLoaded = false;
+        }
+
+        async fetchRemoteEntry() {
+          const remoteEntryUrl = `${this.remoteUrl}/remoteEntry.json`;
+          try {
+            const response = await fetch(remoteEntryUrl);
+            if (!response.ok) {
+              throw new Error(`Failed to fetch remoteEntry.json: ${response.statusText}`);
+            }
+            const remoteEntry = await response.json();
+            console.log('Remote entry loaded:', remoteEntry);
+            return remoteEntry;
+          } catch (error) {
+            console.error('Error fetching remoteEntry.json:', error);
+            throw error;
+          }
+        }
+
+        generateImportMap(remoteEntry) {
+          const imports = {};
+          remoteEntry.shared.forEach(({ packageName, outFileName }) => {
+            imports[packageName] = `${this.remoteUrl}/${outFileName}`;
+          });
+          console.log('Generated import map:', imports);
+          return { imports };
+        }
+
+        injectImportMap(importMap) {
+          const existingImportMap = document.querySelector('script[type="importmap"]');
+          if (existingImportMap) {
+            console.warn('Import map already exists, skipping injection');
+            return;
+          }
+
+          const importMapScript = document.createElement('script');
+          importMapScript.type = 'importmap';
+          importMapScript.textContent = JSON.stringify(importMap, null, 2);
+
+          const firstScript = document.querySelector('script');
+          if (firstScript) {
+            firstScript.parentNode?.insertBefore(importMapScript, firstScript);
+          } else {
+            document.head.appendChild(importMapScript);
+          }
+
+          console.log('Import map injected successfully');
+        }
+
+        async loadModuleShims() {
+          if ('importmap' in HTMLScriptElement.prototype) {
+            console.log('Import maps natively supported');
+            return;
+          }
+
+          if (window.esmsInitOptions || document.querySelector('script[src*="es-module-shims"]')) {
+            console.log('ES Module Shims already loaded');
+            return;
+          }
+
+          return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = 'https://ga.jspm.io/npm:es-module-shims@1.8.0/dist/es-module-shims.js';
+
+            script.onload = () => {
+              console.log('ES Module Shims loaded');
+              resolve();
+            };
+
+            script.onerror = () => {
+              reject(new Error('Failed to load ES Module Shims'));
+            };
+
+            document.head.appendChild(script);
+          });
+        }
+
+        async initialize() {
+          if (this.isLoaded) {
+            console.log('Import maps already initialized');
+            return;
+          }
+
+          try {
+            await this.loadModuleShims();
+            const remoteEntry = await this.fetchRemoteEntry();
+            const importMap = this.generateImportMap(remoteEntry);
+            this.injectImportMap(importMap);
+            await new Promise(resolve => setTimeout(resolve, 100));
+            this.isLoaded = true;
+            console.log('Import maps initialized successfully');
+          } catch (error) {
+            console.error('Failed to initialize import maps:', error);
+            throw error;
+          }
+        }
+
+        getExposedComponentUrl(componentKey) {
+          return `${this.remoteUrl}/${componentKey.replace('./', '')}.js`;
+        }
+      }
+
+      // Main loading function
+      async function loadCommercialAutoApp() {
+        const loadingEl = document.getElementById('loading');
+        const errorEl = document.getElementById('error');
+        const containerEl = document.getElementById('commercial-auto-container');
+
+        try {
+          console.log('Loading Commercial Auto UI...');
+
+          // Step 1: Initialize import maps
+          const importMapLoader = new ImportMapLoader(REMOTE_URL);
+          await importMapLoader.initialize();
+
+          console.log('Import maps initialized, loading component...');
+
+          // Step 2: Load the component
+          const componentUrl = importMapLoader.getExposedComponentUrl(COMPONENT_KEY);
+          console.log('Loading component from:', componentUrl);
+
+          const angularModule = await import(/* webpackIgnore: true */ componentUrl);
+          console.log('Commercial Auto UI module loaded:', angularModule);
+
+          // Step 3: Mount the application
+          if (angularModule.mount) {
+            await angularModule.mount(containerEl);
+            loadingEl.style.display = 'none';
+            console.log('Commercial Auto UI mounted successfully');
+          } else {
+            throw new Error('Mount function not found in Commercial Auto UI module');
+          }
+        } catch (err) {
+          console.error('Failed to load Commercial Auto UI:', err);
+          loadingEl.style.display = 'none';
+          errorEl.style.display = 'block';
+          errorEl.innerHTML = `<strong>Error:</strong> ${err.message || 'Unknown error'}`;
+        }
+      }
+
+      // Start loading when DOM is ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', loadCommercialAutoApp);
+      } else {
+        loadCommercialAutoApp();
+      }
+    </script>
+  </body>
+</html>
