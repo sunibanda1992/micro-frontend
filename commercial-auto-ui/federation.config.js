@@ -5,6 +5,7 @@ module.exports = withNativeFederation({
 
   exposes: {
     './commercial-auto-app': './src/bootstrap.ts',
+    './premium-info': './src/bootstrap-premium-info.ts',
   },
 
   shared: {

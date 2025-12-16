@@ -54,9 +54,22 @@
       .app-main {
         flex: 1;
         padding: 32px;
-        max-width: 1400px;
+        max-width: 1600px;
         width: 100%;
         margin: 0 auto;
+        display: flex;
+        gap: 24px;
+        align-items: flex-start;
+      }
+
+      .main-content {
+        flex: 1;
+      }
+
+      .premium-sidebar {
+        width: 350px;
+        position: sticky;
+        top: 32px;
       }
 
       .remote-container {
@@ -65,6 +78,12 @@
         padding: 24px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         min-height: 400px;
+      }
+
+      #premium-info-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
       }
 
       /* Loading spinner */
@@ -123,6 +142,18 @@
       }
 
       /* Responsive */
+      @media (max-width: 1024px) {
+        .app-main {
+          flex-direction: column;
+        }
+
+        .premium-sidebar {
+          width: 100%;
+          position: static;
+          order: -1;
+        }
+      }
+
       @media (max-width: 768px) {
         .app-header {
           padding: 20px 24px;
@@ -157,14 +188,25 @@
     </header>
 
     <main class="app-main">
-      <div class="remote-container">
-        <div id="loading" class="loading-message">
-          <div class="spinner"></div>
-          <span>Loading Commercial Auto application...</span>
+      <div class="main-content">
+        <div class="remote-container">
+          <div id="loading" class="loading-message">
+            <div class="spinner"></div>
+            <span>Loading Commercial Auto application...</span>
+          </div>
+          <div id="error" class="error-message" style="display: none;"></div>
+          <div id="commercial-auto-container"></div>
         </div>
-        <div id="error" class="error-message" style="display: none;"></div>
-        <div id="commercial-auto-container"></div>
       </div>
+
+      <aside class="premium-sidebar">
+        <div id="premium-info-loading" class="loading-message" style="padding: 40px 20px;">
+          <div class="spinner"></div>
+          <span style="font-size: 0.9rem;">Loading Premium Info...</span>
+        </div>
+        <div id="premium-info-error" class="error-message" style="display: none;"></div>
+        <div id="premium-info-container"></div>
+      </aside>
     </main>
 
     <footer class="app-footer">
@@ -283,7 +325,7 @@
         }
       }
 
-      // Main loading function
+      // Main loading function for Commercial Auto app
       async function loadCommercialAutoApp() {
         const loadingEl = document.getElementById('loading');
         const errorEl = document.getElementById('error');
@@ -321,11 +363,55 @@
         }
       }
 
+      // Function to load Premium Info component
+      async function loadPremiumInfo() {
+        const loadingEl = document.getElementById('premium-info-loading');
+        const errorEl = document.getElementById('premium-info-error');
+        const containerEl = document.getElementById('premium-info-container');
+
+        try {
+          console.log('Loading Premium Info component...');
+
+          // Use the same import map loader (already initialized)
+          const importMapLoader = new ImportMapLoader(REMOTE_URL);
+
+          // Wait a bit to ensure import maps are ready
+          await new Promise(resolve => setTimeout(resolve, 500));
+
+          // Load the premium-info component
+          const componentUrl = importMapLoader.getExposedComponentUrl('./premium-info');
+          console.log('Loading Premium Info from:', componentUrl);
+
+          const premiumModule = await import(/* webpackIgnore: true */ componentUrl);
+          console.log('Premium Info module loaded:', premiumModule);
+
+          // Mount the component
+          if (premiumModule.mount) {
+            await premiumModule.mount(containerEl);
+            loadingEl.style.display = 'none';
+            console.log('Premium Info mounted successfully');
+          } else {
+            throw new Error('Mount function not found in Premium Info module');
+          }
+        } catch (err) {
+          console.error('Failed to load Premium Info:', err);
+          loadingEl.style.display = 'none';
+          errorEl.style.display = 'block';
+          errorEl.innerHTML = `<strong>Error:</strong> ${err.message || 'Unknown error'}`;
+        }
+      }
+
+      // Load both components
+      async function loadAllComponents() {
+        await loadCommercialAutoApp();
+        await loadPremiumInfo();
+      }
+
       // Start loading when DOM is ready
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', loadCommercialAutoApp);
+        document.addEventListener('DOMContentLoaded', loadAllComponents);
       } else {
-        loadCommercialAutoApp();
+        loadAllComponents();
       }
     </script>
   </body>

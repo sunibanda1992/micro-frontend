@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(npm install:*)",
-      "Bash(npx @angular/cli@21 new:*)"
+      "Bash(npx @angular/cli@21 new:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(npm start)",
+      "Bash(curl:*)",
+      "Bash(git add:*)"
     ]
   }
 }

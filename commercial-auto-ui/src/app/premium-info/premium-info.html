@@ -1,0 +1,53 @@
+<div class="premium-info-container">
+  <div class="premium-card">
+    <h2 class="premium-title">Premium Calculation</h2>
+
+    <div class="premium-section">
+      <div class="premium-row base">
+        <span class="label">Base Premium</span>
+        <span class="amount">${{ premiumData.basePremium | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="premium-section">
+      <h3 class="section-title">Discounts</h3>
+      <div class="premium-row discount" *ngFor="let discount of premiumData.discounts">
+        <span class="label">{{ discount.name }}</span>
+        <span class="amount negative">-${{ discount.amount | number:'1.2-2' }}</span>
+      </div>
+      <div class="premium-row subtotal">
+        <span class="label">Total Discounts</span>
+        <span class="amount negative">-${{ totalDiscounts | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="premium-section">
+      <h3 class="section-title">Fees</h3>
+      <div class="premium-row fee" *ngFor="let fee of premiumData.fees">
+        <span class="label">{{ fee.name }}</span>
+        <span class="amount">+${{ fee.amount | number:'1.2-2' }}</span>
+      </div>
+      <div class="premium-row subtotal">
+        <span class="label">Total Fees</span>
+        <span class="amount">+${{ totalFees | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="premium-section final">
+      <div class="premium-row total">
+        <span class="label">Annual Premium</span>
+        <span class="amount">${{ finalPremium | number:'1.2-2' }}</span>
+      </div>
+      <div class="premium-row monthly">
+        <span class="label">Monthly Payment</span>
+        <span class="amount">${{ finalPremium / 12 | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="premium-footer">
+      <p class="disclaimer">
+        * Premium amounts are estimates and subject to underwriting approval.
+      </p>
+    </div>
+  </div>
+</div>
