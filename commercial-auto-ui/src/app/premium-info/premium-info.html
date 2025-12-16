@@ -2,6 +2,17 @@
   <div class="premium-card">
     <h2 class="premium-title">Premium Calculation</h2>
 
+    <!-- NgRx Store Communication Display -->
+    <div class="communication-section" *ngIf="currentInputValue">
+      <div class="alert alert-success">
+        <h4>✓ Communication Successful!</h4>
+        <p><strong>Received from Home component:</strong> {{ currentInputValue }}</p>
+        <p class="timestamp" *ngIf="lastUpdated$ | async as lastUpdated">
+          <small>Last updated: {{ lastUpdated | date:'medium' }}</small>
+        </p>
+      </div>
+    </div>
+
     <div class="premium-section">
       <div class="premium-row base">
         <span class="label">Base Premium</span>

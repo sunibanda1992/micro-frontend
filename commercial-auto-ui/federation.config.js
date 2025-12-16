@@ -10,6 +10,7 @@ module.exports = withNativeFederation({
 
   shared: {
     ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
+    '@angular/core/rxjs-interop': { singleton: true, strictVersion: true, requiredVersion: 'auto' },
   },
 
   skip: [

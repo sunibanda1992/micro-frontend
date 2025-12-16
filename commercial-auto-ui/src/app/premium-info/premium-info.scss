@@ -20,6 +20,49 @@
   font-weight: 700;
 }
 
+.communication-section {
+  padding: 20px;
+  background: #f0fdf4;
+  border-bottom: 2px solid #10b981;
+
+  .alert {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    border: none;
+
+    &.alert-success {
+      h4 {
+        color: #065f46;
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin: 0 0 12px 0;
+      }
+
+      p {
+        color: #047857;
+        margin: 8px 0;
+        font-size: 0.95rem;
+
+        strong {
+          font-weight: 600;
+        }
+      }
+
+      .timestamp {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #d1fae5;
+
+        small {
+          color: #059669;
+          font-size: 0.85rem;
+        }
+      }
+    }
+  }
+}
+
 .premium-section {
   padding: 20px;
   border-bottom: 1px solid #e5e7eb;

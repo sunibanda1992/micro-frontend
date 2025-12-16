@@ -4,6 +4,41 @@
     <p class="subtitle">Comprehensive coverage for your business vehicles</p>
   </div>
 
+  <div class="premium-form-section">
+    <div class="card">
+      <div class="card-header">
+        <h3>Test Component Communication</h3>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="onSubmit()" #premiumForm="ngForm">
+          <div class="form-group">
+            <label for="premiumInput" class="form-label">Enter Premium Value:</label>
+            <input
+              type="text"
+              id="premiumInput"
+              name="premiumInput"
+              class="form-control"
+              [(ngModel)]="premiumInput"
+              placeholder="Enter any value to test communication"
+              required
+            />
+          </div>
+          <div class="button-group">
+            <button type="submit" class="btn btn-primary" [disabled]="!premiumForm.valid">
+              Send to Premium Info
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="onReset()">
+              Reset
+            </button>
+          </div>
+        </form>
+        <div class="info-text">
+          <small>This form demonstrates communication between the Home component and Premium Info component using NgRx store.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="features">
     <div class="feature-card">
       <h3>Fleet Coverage</h3>
