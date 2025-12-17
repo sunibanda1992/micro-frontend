@@ -1,0 +1,173 @@
+<div class="registration-container">
+  <div class="page-header">
+    <h2>{{ formConfig?.title || 'User Registration' }}</h2>
+    <p class="subtitle">{{ formConfig?.description || 'Complete the form below to register' }}</p>
+  </div>
+
+  <div class="content-section">
+    <div class="card">
+      <div class="card-body">
+        <!-- Loading State -->
+        @if (!formConfig) {
+          <div class="loading-state">
+            <div class="spinner-border text-primary" role="status">
+              <span class="visually-hidden">Loading form...</span>
+            </div>
+            <p class="mt-3">Loading registration form...</p>
+          </div>
+        }
+
+        <!-- Success Message -->
+        @if (submitSuccess) {
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> Your registration has been submitted successfully.
+            <button type="button" class="btn-close" (click)="submitSuccess = false"></button>
+          </div>
+        }
+
+        <!-- Error Message -->
+        @if (submitError) {
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> There was a problem submitting your registration. Please try again.
+            <button type="button" class="btn-close" (click)="submitError = false"></button>
+          </div>
+        }
+
+        <!-- Dynamic Form -->
+        @if (formConfig && registrationForm) {
+          <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+            <div class="row">
+              @for (field of formConfig.fields; track field.name) {
+                <div class="col-md-6 mb-3">
+                  <label [for]="field.name" class="form-label">
+                    {{ field.label }}
+                    @if (field.required) {
+                      <span class="text-danger">*</span>
+                    }
+                  </label>
+
+                  <!-- Text Input -->
+                  @if (field.type === 'text' || field.type === 'email' || field.type === 'tel' || field.type === 'number' || field.type === 'password') {
+                    <input
+                      [type]="field.type"
+                      [id]="field.name"
+                      [formControlName]="field.name"
+                      [placeholder]="field.placeholder || ''"
+                      class="form-control"
+                      [class.is-invalid]="isFieldInvalid(field.name)"
+                    />
+                  }
+
+                  <!-- Textarea -->
+                  @if (field.type === 'textarea') {
+                    <textarea
+                      [id]="field.name"
+                      [formControlName]="field.name"
+                      [placeholder]="field.placeholder || ''"
+                      class="form-control"
+                      [class.is-invalid]="isFieldInvalid(field.name)"
+                      rows="3"
+                    ></textarea>
+                  }
+
+                  <!-- Select Dropdown -->
+                  @if (field.type === 'select') {
+                    <select
+                      [id]="field.name"
+                      [formControlName]="field.name"
+                      class="form-select"
+                      [class.is-invalid]="isFieldInvalid(field.name)"
+                    >
+                      <option value="">Select {{ field.label }}</option>
+                      @for (option of field.options; track option.value) {
+                        <option [value]="option.value">
+                          {{ option.label }}
+                        </option>
+                      }
+                    </select>
+                  }
+
+                  <!-- Date Input -->
+                  @if (field.type === 'date') {
+                    <input
+                      type="date"
+                      [id]="field.name"
+                      [formControlName]="field.name"
+                      class="form-control"
+                      [class.is-invalid]="isFieldInvalid(field.name)"
+                    />
+                  }
+
+                  <!-- Radio Buttons -->
+                  @if (field.type === 'radio') {
+                    <div class="radio-group">
+                      @for (option of field.options; track option.value) {
+                        <div class="form-check">
+                          <input
+                            type="radio"
+                            [id]="field.name + '_' + option.value"
+                            [formControlName]="field.name"
+                            [value]="option.value"
+                            class="form-check-input"
+                            [class.is-invalid]="isFieldInvalid(field.name)"
+                          />
+                          <label [for]="field.name + '_' + option.value" class="form-check-label">
+                            {{ option.label }}
+                          </label>
+                        </div>
+                      }
+                    </div>
+                  }
+
+                  <!-- Checkbox -->
+                  @if (field.type === 'checkbox') {
+                    <div class="form-check">
+                      <input
+                        type="checkbox"
+                        [id]="field.name"
+                        [formControlName]="field.name"
+                        class="form-check-input"
+                        [class.is-invalid]="isFieldInvalid(field.name)"
+                      />
+                      <label [for]="field.name" class="form-check-label">
+                        {{ field.label }}
+                      </label>
+                    </div>
+                  }
+
+                  <!-- Error Message -->
+                  @if (isFieldInvalid(field.name)) {
+                    <div class="invalid-feedback d-block">
+                      {{ getFieldError(field.name) }}
+                    </div>
+                  }
+                </div>
+              }
+            </div>
+
+            <div class="form-actions mt-4">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="isLoading"
+              >
+                @if (isLoading) {
+                  <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                }
+                {{ isLoading ? 'Submitting...' : 'Submit Registration' }}
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary ms-2"
+                (click)="registrationForm.reset()"
+                [disabled]="isLoading"
+              >
+                Reset
+              </button>
+            </div>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>

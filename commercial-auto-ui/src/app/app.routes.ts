@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { registrationFormResolver } from './guards/registration-form.resolver';
 
 export const routes: Routes = [
   {
@@ -17,5 +18,12 @@ export const routes: Routes = [
   {
     path: 'vehicle',
     loadComponent: () => import('./vehicle/vehicle').then(m => m.Vehicle)
+  },
+  {
+    path: 'registration',
+    loadComponent: () => import('./registration/registration').then(m => m.Registration),
+    resolve: {
+      formConfig: registrationFormResolver
+    }
   }
 ];
