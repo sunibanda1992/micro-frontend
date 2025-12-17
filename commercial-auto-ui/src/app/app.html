@@ -1,13 +1,17 @@
-<div class="container">
-  <header>
-    <h1>Commercial Auto Insurance UI</h1>
-    <nav>
-      <a routerLink="/home" routerLinkActive="active">Home</a>
-      <a routerLink="/about" routerLinkActive="active">About</a>
-    </nav>
-  </header>
+<div class="container mt-4">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav-tabs">
+    <li [ngbNavItem]="'client'">
+      <button ngbNavLink (click)="navigateToTab('client')">Client</button>
+    </li>
+    <li [ngbNavItem]="'vehicle'">
+      <button ngbNavLink (click)="navigateToTab('vehicle')">Vehicle</button>
+    </li>
+    <li [ngbNavItem]="'driver'">
+      <button ngbNavLink (click)="navigateToTab('driver')">Driver</button>
+    </li>
+  </ul>
 
-  <main>
-    <router-outlet />
-  </main>
+  <div class="mt-3">
+    <router-outlet></router-outlet>
+  </div>
 </div>

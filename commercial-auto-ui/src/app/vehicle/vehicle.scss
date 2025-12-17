@@ -1,0 +1,58 @@
+.vehicle-container {
+  padding: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  margin-bottom: 30px;
+
+  h2 {
+    color: #1f2937;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+  }
+
+  .subtitle {
+    color: #6b7280;
+    font-size: 1rem;
+    margin: 0;
+  }
+}
+
+.content-section {
+  .card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    .card-header {
+      background: #f9fafb;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 16px 20px;
+
+      h3 {
+        color: #374151;
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+      }
+    }
+
+    .card-body {
+      padding: 24px;
+
+      p {
+        color: #6b7280;
+        margin-bottom: 16px;
+      }
+
+      ul {
+        color: #4b5563;
+        line-height: 1.8;
+      }
+    }
+  }
+}

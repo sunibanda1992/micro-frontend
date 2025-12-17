@@ -8,7 +8,13 @@
       "Bash(taskkill:*)",
       "Bash(npm start)",
       "Bash(curl:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(git push:*)",
+      "Bash(npm view:*)",
+      "Bash(ping:*)",
+      "Bash(cat:*)"
     ]
   }
 }
