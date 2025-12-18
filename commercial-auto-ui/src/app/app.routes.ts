@@ -25,5 +25,9 @@ export const routes: Routes = [
     resolve: {
       formConfig: registrationFormResolver
     }
+  },
+  {
+    path: 'demo',
+    loadComponent: () => import('./demo/demo').then(m => m.Demo)
   }
 ];

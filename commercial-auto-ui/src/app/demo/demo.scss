@@ -1,0 +1,152 @@
+.demo-container {
+  padding: 20px;
+}
+
+.page-header {
+  margin-bottom: 30px;
+
+  h2 {
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .subtitle {
+    color: #666;
+    font-size: 1.1rem;
+  }
+}
+
+.content-section {
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    .card-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #ddd;
+      padding: 15px 20px;
+
+      h5 {
+        margin: 0;
+        color: #333;
+        font-weight: 600;
+      }
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+  }
+}
+
+.result-box {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+
+  strong {
+    display: block;
+    margin-bottom: 10px;
+    color: #495057;
+  }
+
+  p {
+    margin: 5px 0;
+    color: #6c757d;
+  }
+
+  ul {
+    margin: 10px 0;
+    padding-left: 20px;
+
+    li {
+      color: #6c757d;
+      margin: 5px 0;
+    }
+  }
+}
+
+.option-item {
+  padding: 5px 0;
+
+  strong {
+    display: block;
+    color: #333;
+  }
+
+  small {
+    color: #6c757d;
+  }
+}
+
+.flag {
+  font-size: 1.5rem;
+  margin-right: 8px;
+}
+
+.tags-container {
+  margin-top: 10px;
+
+  .badge {
+    margin: 3px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+}
+
+// Custom ng-select styling
+:host ::ng-deep {
+  .ng-select {
+    .ng-select-container {
+      min-height: 38px;
+      border-radius: 4px;
+      border-color: #ced4da;
+
+      &:hover {
+        border-color: #86b7fe;
+      }
+    }
+
+    &.ng-select-focused {
+      .ng-select-container {
+        border-color: #86b7fe;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+      }
+    }
+
+    .ng-value-container {
+      padding-left: 10px;
+    }
+
+    .ng-placeholder {
+      color: #6c757d;
+    }
+
+    .ng-dropdown-panel {
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+      .ng-dropdown-panel-items {
+        .ng-option {
+          padding: 10px;
+
+          &.ng-option-selected {
+            background-color: #e7f1ff;
+            color: #0d6efd;
+          }
+
+          &.ng-option-marked {
+            background-color: #f8f9fa;
+          }
+
+          &:hover {
+            background-color: #f8f9fa;
+          }
+        }
+      }
+    }
+  }
+}

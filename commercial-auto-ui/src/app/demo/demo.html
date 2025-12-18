@@ -1,0 +1,256 @@
+<div class="demo-container">
+  <div class="page-header">
+    <h2>ng-select Demo Examples</h2>
+    <p class="subtitle">Comprehensive examples of ng-select functionality</p>
+  </div>
+
+  <div class="content-section">
+    <!-- Basic Select -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Basic Select</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="basic-select" class="form-label">Select a City</label>
+            <ng-select
+              id="basic-select"
+              [(ngModel)]="selectedCity"
+              [items]="cities"
+              bindLabel="name"
+              placeholder="Choose a city">
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+            <div class="result-box">
+              <strong>Selected:</strong>
+              <p>{{ selectedCity ? selectedCity.name : 'None' }}</p>
+              <button class="btn btn-sm btn-secondary" (click)="clearSelection('basic')">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Multi-Select -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Multi-Select</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="multi-select" class="form-label">Select Multiple Cities</label>
+            <ng-select
+              id="multi-select"
+              [(ngModel)]="selectedCities"
+              [items]="cities"
+              [multiple]="true"
+              bindLabel="name"
+              placeholder="Choose cities">
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+            <div class="result-box">
+              <strong>Selected Cities:</strong>
+              <ul>
+                @for (city of selectedCities; track city.id) {
+                  <li>{{ city.name }}</li>
+                }
+                @if (selectedCities.length === 0) {
+                  <li>None</li>
+                }
+              </ul>
+              <button class="btn btn-sm btn-secondary" (click)="clearSelection('multi')">Clear All</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Searchable Select -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Searchable Select</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="search-select" class="form-label">Search People</label>
+            <ng-select
+              id="search-select"
+              [(ngModel)]="selectedPerson"
+              [items]="people"
+              bindLabel="name"
+              placeholder="Type to search..."
+              [searchable]="true">
+              <ng-template ng-option-tmp let-item="item">
+                <div class="option-item">
+                  <strong>{{ item.name }}</strong>
+                  <small class="text-muted d-block">Age: {{ item.age }}, Country: {{ item.country }}</small>
+                </div>
+              </ng-template>
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+            <div class="result-box">
+              <strong>Selected Person:</strong>
+              @if (selectedPerson) {
+                <p><strong>Name:</strong> {{ selectedPerson.name }}</p>
+                <p><strong>Age:</strong> {{ selectedPerson.age }}</p>
+                <p><strong>Country:</strong> {{ selectedPerson.country }}</p>
+              } @else {
+                <p>None</p>
+              }
+              <button class="btn btn-sm btn-secondary" (click)="clearSelection('search')">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Custom Template -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Custom Template with Flags</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="custom-select" class="form-label">Select Country</label>
+            <ng-select
+              id="custom-select"
+              [(ngModel)]="selectedCountry"
+              [items]="countries"
+              bindLabel="name"
+              placeholder="Choose a country">
+              <ng-template ng-label-tmp let-item="item">
+                <span class="flag">{{ item.flag }}</span>
+                <span>{{ item.name }}</span>
+              </ng-template>
+              <ng-template ng-option-tmp let-item="item">
+                <span class="flag">{{ item.flag }}</span>
+                <strong>{{ item.name }}</strong>
+                <small class="text-muted ms-2">({{ item.code }})</small>
+              </ng-template>
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+            <div class="result-box">
+              <strong>Selected Country:</strong>
+              @if (selectedCountry) {
+                <p>{{ selectedCountry.flag }} {{ selectedCountry.name }} ({{ selectedCountry.code }})</p>
+              } @else {
+                <p>None</p>
+              }
+              <button class="btn btn-sm btn-secondary" (click)="clearSelection('country')">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grouped Options -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Grouped Options</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="grouped-select" class="form-label">Select Album by Genre</label>
+            <ng-select
+              id="grouped-select"
+              [(ngModel)]="selectedAlbum"
+              [items]="albums"
+              bindLabel="name"
+              groupBy="group"
+              placeholder="Choose an album">
+              <ng-template ng-optgroup-tmp let-item="item">
+                <strong>{{ item.group }}</strong>
+              </ng-template>
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+            <div class="result-box">
+              <strong>Selected Album:</strong>
+              <p>{{ selectedAlbum ? selectedAlbum.name : 'None' }}</p>
+              <button class="btn btn-sm btn-secondary" (click)="clearSelection('album')">Clear</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tagging/Add Items -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Tagging (Add Custom Items)</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="tag-select" class="form-label">Select or Add Technologies</label>
+            <ng-select
+              id="tag-select"
+              [(ngModel)]="selectedTags"
+              [items]="availableTags"
+              [multiple]="true"
+              [addTag]="true"
+              [hideSelected]="true"
+              placeholder="Type to add custom tags">
+            </ng-select>
+          </div>
+          <div class="col-md-6">
+            <div class="result-box">
+              <strong>Selected Tags:</strong>
+              <div class="tags-container">
+                @for (tag of selectedTags; track tag) {
+                  <span class="badge bg-primary me-1">{{ tag }}</span>
+                }
+                @if (selectedTags.length === 0) {
+                  <p>None</p>
+                }
+              </div>
+              <button class="btn btn-sm btn-secondary mt-2" (click)="clearSelection('tags')">Clear All</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disabled State -->
+    <div class="card mb-4">
+      <div class="card-header">
+        <h5>Disabled State</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6">
+            <label for="disabled-select" class="form-label">Disabled Select</label>
+            <ng-select
+              id="disabled-select"
+              [(ngModel)]="selectedDisabled"
+              [items]="cities"
+              [disabled]="isDisabled"
+              bindLabel="name"
+              placeholder="This can be disabled">
+            </ng-select>
+            <button class="btn btn-primary mt-2" (click)="toggleDisabled()">
+              {{ isDisabled ? 'Enable' : 'Disable' }}
+            </button>
+          </div>
+          <div class="col-md-6">
+            <div class="result-box">
+              <strong>Status:</strong>
+              <p>{{ isDisabled ? 'Disabled' : 'Enabled' }}</p>
+              <strong>Selected:</strong>
+              <p>{{ selectedDisabled ? selectedDisabled.name : 'None' }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

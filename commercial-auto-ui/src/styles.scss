@@ -3,6 +3,9 @@
 /* Import Bootstrap styles */
 @use "bootstrap/scss/bootstrap";
 
+/* Import ng-select styles */
+@import "@ng-select/ng-select/themes/default.theme.css";
+
 /* Fix nav tabs when embedded in host */
 app-root {
   /* Override host's global * reset for nav components */
